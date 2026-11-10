@@ -6,9 +6,11 @@ class Sensor:
     def __init__(self, nombre, duracion):
         self.duracion = duracion
         self.nombre = nombre
+        self.duracion_obtenida = 0
 
     def leer(self):
         time.sleep(self.duracion)
+        self.duracion_obtenida = perf_counter()
 
 sensores = [Sensor("S1", 1), Sensor("S2", 2), Sensor("S3", 1.5)]
 hilos = [
@@ -20,16 +22,28 @@ hilos = [
 # ======================
 print("Leyendo simulacion de sensores")
 
+"""
 for hilo_index, hilo_sensor in enumerate(hilos):
     t_inicio = perf_counter()
     hilo_sensor.start()
     hilo_sensor.join()
     t_fin = perf_counter()
 
+""" 
+t_inicio = perf_counter()
+hilos[0].start()
+hilos[1].start()
+hilos[2].start()
 
-    print("Lectura de sensor: ", sensores[hilo_index].nombre)
-    print("Tiempo esperado: ", str(sensores[hilo_index].duracion))
-    print("Tiempo transcurrido: ", str(t_fin - t_inicio))
+hilos[0].join()
+hilos[1].join()
+hilos[2].join()
+
+
+for sensor in sensores:
+    print("Lectura de sensor: ", sensor.nombre)
+    print("Tiempo esperado: ", str(sensor.duracion))
+    print("Tiempo transcurrido: ", str(sensor.duracion_obtenida - t_inicio))
     print("======================")
 
 # ======================
