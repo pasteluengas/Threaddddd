@@ -13,32 +13,51 @@ class Sensor:
         self.duracion_obtenida = perf_counter()
 
 sensores = [Sensor("S1", 1), Sensor("S2", 2), Sensor("S3", 1.5)]
-hilos = [
-    threading.Thread(target=sensores[0].leer),
-    threading.Thread(target=sensores[1].leer),
-    threading.Thread(target=sensores[2].leer),
-]
 
-# ======================
-print("Leyendo simulacion de sensores")
+def conHilos():
+    hilos = [
+        threading.Thread(target=sensores[0].leer),
+        threading.Thread(target=sensores[1].leer),
+        threading.Thread(target=sensores[2].leer),
+    ]
 
-t_inicio = perf_counter()
-hilos[0].start()
-hilos[1].start()
-hilos[2].start()
+    # ======================
+    print("Leyendo simulacion de sensores")
 
-hilos[0].join()
-hilos[1].join()
-hilos[2].join()
+    t_inicio = perf_counter()
+    hilos[0].start()
+    hilos[1].start()
+    hilos[2].start()
 
-
-for sensor in sensores:
-    print("Lectura de sensor: ", sensor.nombre)
-    print("Tiempo esperado: ", str(sensor.duracion))
-    print("Tiempo transcurrido: ", str(sensor.duracion_obtenida - t_inicio))
-    print("======================")
-
-# ======================
+    hilos[0].join()
+    hilos[1].join()
+    hilos[2].join()
+    t_total = perf_counter()
 
 
+    for sensor in sensores:
+        print("Lectura de sensor: ", sensor.nombre)
+        print("Tiempo esperado: ", str(sensor.duracion))
+        print("Tiempo transcurrido: ", str(sensor.duracion_obtenida - t_inicio))
+        print("======================")
 
+    print("Total:", t_total - t_inicio)
+
+    # ======================
+
+
+def secuencial():
+    t_inicio = perf_counter()
+    for sensor in sensores:
+        sensor.leer()
+    t_total = perf_counter()
+
+    for sensor in sensores:
+            print("Lectura de sensor: ", sensor.nombre)
+            print("Tiempo esperado: ", str(sensor.duracion))
+            print("Tiempo transcurrido: ", str(sensor.duracion_obtenida - t_inicio))
+            print("======================")
+    print("Total:", t_total - t_inicio)
+
+if __name__ == "__main__":
+     conHilos()

@@ -57,5 +57,6 @@ hilo1.join()
 hilo2.join()
 print("Cantidad final: ", tienda2.inventario)
 
+assert tienda1.inventario == 0, f"Error: El inventario quedó en {tienda1.inventario}."
 assert tienda2.inventario == 0, f"Error: El inventario quedó en {tienda2.inventario}."
-print("¡Prueba superada con éxito.\n")
+print("¡Prueba superada con éxito! Las Aserciones pasaron correctamente.\n")
