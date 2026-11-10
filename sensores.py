@@ -22,14 +22,6 @@ hilos = [
 # ======================
 print("Leyendo simulacion de sensores")
 
-"""
-for hilo_index, hilo_sensor in enumerate(hilos):
-    t_inicio = perf_counter()
-    hilo_sensor.start()
-    hilo_sensor.join()
-    t_fin = perf_counter()
-
-""" 
 t_inicio = perf_counter()
 hilos[0].start()
 hilos[1].start()
